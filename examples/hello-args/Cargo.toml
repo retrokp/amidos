@@ -1,0 +1,17 @@
+cargo-features = ["panic-immediate-abort"]
+
+[package]
+name = "hello-args"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+amidos = { path = "../..", features=["stack-checker"] }
+
+[profile.release]
+opt-level = "s"
+strip = true
+lto = true
+codegen-units = 1
+panic = "immediate-abort"

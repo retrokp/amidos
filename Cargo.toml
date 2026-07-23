@@ -1,0 +1,43 @@
+[package]
+name = "amidos"
+version = "0.0.1"
+edition = "2024"
+description = "Safe API for AmigaDOS to create CLI programs for Amiga m68k"
+repository = "https://github.com/retrokp/amidos"
+license = "0BSD OR Apache-2.0"
+keywords = ["amiga", "cli", "amigados"]
+categories = ["command-line-interface", "api-bindings", "no-std"]
+rust-version = "1.99"
+
+[features]
+# Enables features for Kickstart 2.0 (v36).
+v36 = []
+# Enables features for Kickstart 2.04 (v37) and all earlier versions (v36).
+v37 = ["v36"]
+# Enables stack bounds checker
+stack-checker = []
+
+[package.metadata.docs.rs]
+all-features = true
+default-target = "m68k-unknown-none-elf"
+targets = []
+cargo-args = ["-Z", "build-std=core"]
+
+[dependencies]
+amiga-sys = "0.0.1"
+
+[lints.clippy]
+panic = "forbid"
+exit = "forbid"
+unwrap_used = "forbid"
+expect_used = "forbid"
+unimplemented = "forbid"
+todo = "forbid"
+unreachable = "forbid"
+cast_ptr_alignment = "forbid"
+char_lit_as_u8 = "forbid"
+unnecessary_cast = "forbid"
+cast_lossless = "forbid"
+cast_possible_truncation = "deny"
+cast_sign_loss = "deny"
+checked_conversions = "forbid"
