@@ -127,8 +127,6 @@ impl Dos {
     pub fn rename(&mut self, from: &CStr, to: &CStr) -> Result<()> {
         validate_path(from)?;
         validate_path(to)?;
-        // TODO: V34 has a bug related to dir renaming into itself, check for that? how to compare
-        // absolute and relative paths?
         let res = unsafe {
             amiga_sys::Rename(
                 self.dos_lib,
@@ -776,7 +774,6 @@ impl FileLock {
     ///
     /// For directories, subsequent iterator items are entries under the directory.
     pub fn examine(&mut self) -> Result<Examine> {
-        // TODO: FileInfoBlock consumes quite a lot of stack, should it be allocated to heap?
         let fiba = FileInfoBlockAligner {
             sys_fib: amiga_sys::FileInfoBlock {
                 fib_DiskKey: 0,

@@ -24,7 +24,7 @@ targets = []
 cargo-args = ["-Z", "build-std=core"]
 
 [dependencies]
-amiga-sys = "0.0.1"
+amiga-sys = "0.0.2"
 
 [lints.clippy]
 panic = "forbid"
