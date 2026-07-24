@@ -591,7 +591,8 @@ pub enum MainArgs {
 pub struct CliArgs {
     /// CLI command name.
     pub command_name: &'static CStr,
-    /// All command arguments as one string (doesn't include the command name).
+    /// All command arguments as one string (doesn't include the command name). The trailing
+    /// newline '\n' (0x0a) is included.
     pub arguments: &'static CStr,
 }
 
