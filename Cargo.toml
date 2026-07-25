@@ -19,12 +19,15 @@ stack-checker = []
 
 [package.metadata.docs.rs]
 all-features = true
-default-target = "m68k-unknown-none-elf"
-targets = []
-cargo-args = ["-Z", "build-std=core"]
+# default-target disabled because it crashes on docs.rs: "rustc interrupted by SIGSEGV"
+# https://docs.rs/crate/amiga-sys/latest/builds/3938781
+# try enabling when https://github.com/rust-lang/rust/issues/139311 is fixed
+#default-target = "m68k-unknown-none-elf"
+#targets = []
+#cargo-args = ["-Z", "build-std=core"]
 
 [dependencies]
-amiga-sys = "0.0.2"
+amiga-sys = "0.0.3"
 
 [lints.clippy]
 panic = "forbid"
