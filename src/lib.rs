@@ -191,24 +191,29 @@ pub extern "C" fn _start() {
         // get stack size (CLI and Workbench both store stack size to stack)
         "move.l 4(%sp), %d1",
         // push arguments to stack
-        "move.l #{amimain}, -(%sp)", // amidos_main_fn
         "move.l %d0, -(%sp)",   // cli_arg_len
         "move.l %a0, -(%sp)",   // cli_arg_ptr
         "move.l %d1, -(%sp)",   // stack_size
         "move.l %a1, -(%sp)",   // stack_upper_addr
 
-        // call _start_rs, it returns the exit code in %d0
-        "jsr {startrs}",
+        // call _start2, it returns the exit code in %d0
+        "jsr {start2}",
 
         // pop arguments from stack
-        "lea    20(%sp), %sp",
+        "lea    16(%sp), %sp",
 
         // exit the program
         "rts",
-        startrs = sym amidos::_start_rs,
-        amimain = sym crate::amidos_main,
+        start2 = sym crate::_start2,
     );
 }
+
+fn _start2(stack_upper_addr: usize, stack_size: usize, cli_arg_ptr: *const u8,
+    cli_arg_len: u32) -> i32 {
+    // call `_start_rs` with `amidos_main` here so that `amidos_main` return type is checked
+    amidos::_start_rs(stack_upper_addr, stack_size, cli_arg_ptr, cli_arg_len, amidos_main)
+}
+
 }
 }
 
