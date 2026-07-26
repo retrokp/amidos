@@ -334,6 +334,15 @@ pub fn _start_rs(
             // its safer to use the system provided address (for future compatibility)
             _INTERNAL_UPPER_STACK_POINTER = (*process).pr_Task.tc_SPUpper as usize;
 
+            // KS<1.3 Workbench launched programs have pr_ConsoleTask set to a value,
+            // but pr_CIS and pr_COS are null, which means that File::open(dos, c"*") crashes.
+            // KS>=1.3 programs have pr_ConsoleTask set to null.
+            // fix KS<1.3 not to crash by setting pr_ConsoleTask to null.
+            // (should it be restored before returning to the system?)
+            if (*dos.dos_lib).lib_Version < 34 {
+                (*process).pr_ConsoleTask = core::ptr::null_mut();
+            }
+
             let mut sbottom = core::ptr::null_mut();
             if cfg!(feature = "stack-checker") {
                 // stack overflow detection: put the canary to the bottom of the stack
