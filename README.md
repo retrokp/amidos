@@ -61,7 +61,7 @@ Run these (replace hello-args with the example name):
 
     cd examples/hello-args
     cargo +nightly build --target m68k-unknown-none-elf --release
-    elf2hunk target/m68k-unknown-none-elf/release/hello-args target/m68k-unknown-none-elf/release/hello-args.exe
+    elf2hunk target/m68k-unknown-none-elf/release/hello-args target/m68k-unknown-none-elf/release/hello-args.exe -s
     # Amiga executable: target/m68k-unknown-none-elf/release/hello-args.exe
 
 The release build is usually more successful than the debug build.
