@@ -53,7 +53,7 @@
 //! This crate doesn't currently use heap memory or `core::alloc`, but this may change
 //! in the future.
 //!
-//! The [`global_allocator!()`] macro can be used to implement a global allocator, which
+//! The [`global_allocmem!()`] macro can be used to implement a global allocator, which
 //! uses the system functions `AllocMem()` and `FreeMem()` to manage heap allocations
 //! so that the Rust `alloc` crate can be used.
 //!
@@ -502,17 +502,20 @@ pub fn _panic_exit_immediate_abort_minimal(exit_code: i32) {
 /// This allocator directly calls the system `AllocMem()` and `FreeMem()`. The maximum alignment
 /// is 4 bytes.
 ///
+/// Note that using this allocator for small allocations (CString, Vec, ..) may
+/// fragment the system memory. It's better to use a pooled memory allocator for small allocations.
+///
 /// Ensure that `.cargo/config.toml` contains `build-std = ["panic_abort", "core", "alloc"]`
-/// or that the cargo build command includes it and use `extern crate alloc;` in the source code.
+/// or that the cargo build command includes building with "alloc".
 ///
 /// # Examples
 ///
 /// ```
 /// extern crate alloc;
-/// amidos::global_allocator!();
+/// amidos::global_allocmem!();
 /// ```
 #[macro_export]
-macro_rules! global_allocator {
+macro_rules! global_allocmem {
     () => {
 struct AmidosGlobalAllocator;
 
