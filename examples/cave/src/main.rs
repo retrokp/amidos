@@ -1,6 +1,7 @@
 //! Cave generator cellular automata example CLI program for amidos (Amiga m68k).
 //!
 //! This example shows how to use the global allocator and heap memory.
+//! Also, it shows how to open a console window when launched from Workbench.
 //!
 
 #![no_std]
@@ -104,8 +105,11 @@ fn print_map(output: &mut amidos::File, map: &[bool]) -> Result<(), amidos::Erro
 }
 
 fn amidos_main(dos: &mut amidos::Dos, _args: amidos::MainArgs) -> i32 {
-    let Some(mut output) = dos.output() else {
-        // no output stream: launched from Workbench
+    // open default stdio or if it isn't available (launched from Workbench), then open
+    // a new console window
+    let Some(mut output) = dos.output()
+        .or_else(|| amidos::File::create(dos, c"CON:0/0/640/200/Cave!/close/wait").ok()) else {
+        // couldn't get the default stdio or console window
         return amidos::EXIT_CODE_ERROR;
     };
     // allocate memory using try_reserve() to catch out-of-memory situations
