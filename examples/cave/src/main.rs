@@ -94,12 +94,12 @@ fn print_map(output: &mut amidos::File, map: &[bool]) -> Result<(), amidos::Erro
     for y in 0..HEIGHT {
         for x in 0..WIDTH {
             if map[idx(x, y)] {
-                output.write_all(c"#".to_bytes())?;
+                output.write_all(b"#")?;
             } else {
-                output.write_all(c".".to_bytes())?;
+                output.write_all(b".")?;
             }
         }
-        output.write_all(c"\n".to_bytes())?;
+        output.write_all(b"\n")?;
     }
     Ok(())
 }

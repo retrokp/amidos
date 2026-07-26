@@ -13,7 +13,7 @@ fn amidos_main(dos: &mut amidos::Dos, args: amidos::MainArgs) -> i32 {
         return amidos::EXIT_CODE_ERROR;
     };
     // launched from CLI
-    let _ = output.write_all(c"Command name: ".to_bytes());
+    let _ = output.write_all(b"Command name: ");
     match args {
         amidos::MainArgs::Cli(cli) => {
             let _ = output.write_all(cli.command_name.to_bytes());
@@ -22,9 +22,9 @@ fn amidos_main(dos: &mut amidos::Dos, args: amidos::MainArgs) -> i32 {
             let _ = output.write_all(&[b'\n']);
         }
         amidos::MainArgs::Workbench(_wb) => {
-            let _ = output.write_all(c"?? got workbench args.".to_bytes());
+            let _ = output.write_all(b"?? got workbench args.");
         }
     }
-    let _ = output.write_all(c"Done.\n".to_bytes());
+    let _ = output.write_all(b"Done.\n");
     amidos::EXIT_CODE_OK
 }
