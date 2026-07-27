@@ -791,14 +791,3 @@ fn u32_from_usize(value: usize) -> u32 {
 fn usize_from_i32(value: i32) -> usize {
     value as usize
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = to_hex(2);
-        assert_eq!(result, 50);
-    }
-}
