@@ -126,7 +126,7 @@ fn amidos_main(dos: &mut amidos::Dos, _args: amidos::MainArgs) -> i32 {
     next.resize(WIDTH * HEIGHT, false);
 
     let datestamp = dos.date_stamp();
-    let seed = (datestamp.days ^ datestamp.minutes << 6 ^ datestamp.ticks).cast_unsigned();
+    let seed = (datestamp.days ^ datestamp.minutes << 10 ^ datestamp.ticks).cast_unsigned();
     generate_map(&mut current, seed);
 
     for _ in 0..ITERATIONS {
