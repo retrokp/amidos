@@ -437,7 +437,7 @@ pub fn _panic_exit_abort(info: &core::panic::PanicInfo) {
     unsafe {
         // open dos.library to print out an error message
         let execlib = amiga_sys::abs_exec_library();
-        let doslib = amiga_sys::OpenLibrary(execlib, b"dos.library\0".as_ptr(), 0);
+        let doslib = amiga_sys::OpenLibrary(execlib, c"dos.library".as_ptr() as *const u8, 0);
         if !doslib.is_null() {
             let output = amiga_sys::Output(doslib);
             if output != 0 {
@@ -478,7 +478,7 @@ pub fn _panic_exit_immediate_abort() {
     unsafe {
         // open dos.library to print out an error message
         let execlib = amiga_sys::abs_exec_library();
-        let doslib = amiga_sys::OpenLibrary(execlib, b"dos.library\0".as_ptr(), 0);
+        let doslib = amiga_sys::OpenLibrary(execlib, c"dos.library".as_ptr() as *const u8, 0);
         if !doslib.is_null() {
             let output = amiga_sys::Output(doslib);
             if output != 0 {

@@ -52,7 +52,8 @@ impl Dos {
     // mess up initial_currentdir_lock
     pub(crate) fn new() -> Result<Dos> {
         let dos_lib = unsafe {
-            amiga_sys::OpenLibrary(amiga_sys::abs_exec_library(), b"dos.library\0".as_ptr(), 0)
+            amiga_sys::OpenLibrary(amiga_sys::abs_exec_library(),
+                c"dos.library".as_ptr() as *const u8, 0)
         };
         if dos_lib.is_null() {
             return Err(crate::error::Error::UnsupportedLibraryVersion);
@@ -1014,6 +1015,7 @@ impl FileInfoBlock {
     /// The size of the file in bytes.
     ///
     /// The size of directories and the size of links to directories are unspecified.
+    #[allow(clippy::len_without_is_empty)]
     pub fn len(&self) -> i32 {
         self.len
     }
